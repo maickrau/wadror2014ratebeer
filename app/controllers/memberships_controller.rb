@@ -35,6 +35,7 @@ class MembershipsController < ApplicationController
       else
         format.html { render action: 'new' }
         format.json { render json: @membership.errors, status: :unprocessable_entity }
+        @beer_clubs = BeerClub.all
       end
     end
   end
