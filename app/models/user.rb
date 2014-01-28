@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 4 }
   validate :password_is_not_completely_stupid, on: :create, on: :update
 
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   has_many :ratings, :dependent => :destroy
   has_many :beers, :through => :ratings
   has_many :beer_clubs, :through => :memberships
