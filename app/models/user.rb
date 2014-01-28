@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   validates :username, uniqueness: true, length: { minimum: 3, maximum: 15 }
   validates :password, length: { minimum: 4 }
-  validate :password_is_not_completely_stupid, on: :create
+  validate :password_is_not_completely_stupid, on: :create, on: :update
 
   has_many :ratings
   has_many :beers, :through => :ratings
