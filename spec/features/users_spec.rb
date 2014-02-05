@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "User" do
   before :each do
-    FactoryGirl.create :user
+    @pekka = FactoryGirl.create :user
   end
 
   describe "who has signed up" do
@@ -19,6 +19,7 @@ describe "User" do
       expect(page).to have_content 'User and password do not match'
     end
   end
+
   it "who tries to sign up with good credentials is saved" do
     visit signup_path
     fill_in('user_username', with:'Brian')
@@ -28,5 +29,15 @@ describe "User" do
     expect{
       click_button('Create User')
     }.to change{User.count}.by(1)
+  end
+
+  it "should show only their ratings on their page" do
+    beer1 = FactoryGirl.create(:beer)
+    beer2 = FactoryGirl.create(:beer)
+    jonne = FactoryGirl.create(:user, username:'jonne')
+    FactoryGirl.create(:rating, beer:beer1, user:jonne)
+    FactoryGirl.create(:rating, beer:beer2, user:@pekka)
+    visit user_path(jonne)
+    expect(page).to have_content 'Has made 1 rating'
   end
 end
