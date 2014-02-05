@@ -25,4 +25,11 @@ describe "Rating" do
     expect(beer1.ratings.count).to eq(1)
     expect(beer1.average_rating).to eq(15.0)
   end
+
+  it "should be shown in the ratings screen" do
+    FactoryGirl.create(:rating, beer:beer1, user:user)
+    FactoryGirl.create(:rating, beer:beer2, user:user)
+    visit ratings_path
+    expect(page).to have_content('Number of ratings: 2')
+  end
 end
