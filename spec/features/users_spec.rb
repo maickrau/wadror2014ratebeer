@@ -40,4 +40,16 @@ describe "User" do
     visit user_path(jonne)
     expect(page).to have_content 'Has made 1 rating'
   end
+
+  it "who is signed in can delete their rating" do
+    sign_in(username:'Pekka', password:'Foobar1')
+    beer1 = FactoryGirl.create(:beer)
+    beer2 = FactoryGirl.create(:beer)
+    FactoryGirl.create(:rating, beer:beer1, user:@pekka)
+    FactoryGirl.create(:rating, beer:beer2, user:@pekka)
+    expect(Rating.count).to eq(2)
+    visit user_path(@pekka)
+    page.find(:xpath, "(//a[contains(text(), 'delete')])[1]").click
+    expect(Rating.count).to eq(1)
+  end
 end
