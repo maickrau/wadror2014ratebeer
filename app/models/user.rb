@@ -19,4 +19,9 @@ class User < ActiveRecord::Base
     errors.add(:password, 'must contain a number') if not password =~ /\d/
   end
 
+  def favorite_beer
+    return nil if ratings.empty?
+    ratings.order(score: :desc).limit(1).first.beer
+  end
+
 end
