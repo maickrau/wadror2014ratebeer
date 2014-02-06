@@ -18,6 +18,12 @@
   </p>
 <% end %>
 
+<% if not @user.favorite_brewery.nil? %>
+  <p>
+    Favorite brewery <%= @user.favorite_brewery.name %>
+  </p>
+<% end %>
+
 <% if not @user.beer_clubs.empty? %>
   <p>
     Member of

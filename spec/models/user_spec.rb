@@ -58,11 +58,11 @@ describe "User's favorite style" do
   let(:user){ FactoryGirl.create(:user) }
 
   it "method exists" do
-    user.should respond_to :favorite_beer
+    user.should respond_to :favorite_style
   end
 
   it "returns nil if they have no ratings" do
-    user.favorite_beer.should eq(nil)
+    user.favorite_style.should eq(nil)
   end
 
   it "returns correctly if there is one rating" do
@@ -89,6 +89,48 @@ describe "User's favorite style" do
     create_beers_with_ratings(3, 4, user)
     user.favorite_style.should eq(best.style)
     user.favorite_style.should_not eq("Lager")
+  end
+end
+
+describe "User's favorite brewery" do
+  let(:user){ FactoryGirl.create(:user) }
+
+  it "method exists" do
+    user.should respond_to :favorite_brewery
+  end
+
+  it "returns nil if they have no ratings" do
+    user.favorite_brewery.should eq(nil)
+  end
+
+  it "returns correctly if there is one rating" do
+    beer = create_beer_with_rating(5, user)
+
+    user.favorite_brewery.should eq(beer.brewery)
+  end
+
+  it "returns correctly if there are many ratings" do
+    create_beers_with_ratings(10, 5, 15, 31, 1, 20, user)
+    best = create_beer_with_rating(50, user)
+    brewery2 = FactoryGirl.create(:brewery, name:'panimo2')
+    best.brewery = brewery2
+    best.save
+    create_beers_with_ratings(21, 35, user)
+    user.favorite_brewery.should eq(best.brewery)
+  end
+
+  it "returns brewery with highest average correctly" do
+    brewery = FactoryGirl.create(:brewery)
+    beer1 = FactoryGirl.create(:beer, brewery:brewery)
+    beer2 = FactoryGirl.create(:beer, brewery:brewery)
+    beer3 = FactoryGirl.create(:beer, brewery:brewery)
+    FactoryGirl.create(:rating, user:user, beer:beer1, score:50)
+    FactoryGirl.create(:rating, user:user, beer:beer2, score:1)
+    FactoryGirl.create(:rating, user:user, beer:beer3, score:2)
+    brewery2 = FactoryGirl.create(:brewery, name:'panimo2')
+    best = FactoryGirl.create(:beer, brewery:brewery2)
+    FactoryGirl.create(:rating, user:user, beer:best, score:40)
+    user.favorite_brewery.should eq(best.brewery)
   end
 end
 

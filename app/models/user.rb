@@ -30,8 +30,18 @@ class User < ActiveRecord::Base
   end
 
   def style_average(style)
-    ret = average_of_list(ratings.select{ |rating| rating.beer.style == style })
-    return nil if ret.nan?
-    return ret
+    de_NaN_ify average_of_list(ratings.select{ |rating| rating.beer.style == style })
+  end
+
+  def favorite_brewery
+    Brewery.select{|brewery| not brewery_average(brewery).nil? }.max_by{ |brewery| brewery_average(brewery) }
+  end
+
+  def brewery_average(brewery)
+    de_NaN_ify average_of_list(ratings.select{ |rating| rating.beer.brewery == brewery })
+  end
+
+  def de_NaN_ify(maybe_nan)
+    maybe_nan.nan? ? nil : maybe_nan
   end
 end
