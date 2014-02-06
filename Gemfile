@@ -14,10 +14,10 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov', require:false
+  gem 'rspec-rails', '~> 2.14.1'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.14.1'
   gem 'sqlite3'
 end
 
