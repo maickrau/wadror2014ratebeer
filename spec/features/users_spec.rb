@@ -41,6 +41,21 @@ describe "User" do
     expect(page).to have_content 'Has made 1 rating'
   end
 
+  it "should show their favorite style on their page" do
+    beer = FactoryGirl.create(:beer)
+    FactoryGirl.create(:rating, user:@pekka, beer:beer)
+    visit user_path(@pekka)
+    expect(page).to have_content 'Favorite style Lager'
+  end
+
+  it "should show their favorite brewery on their page" do
+    beer = FactoryGirl.create(:beer)
+    FactoryGirl.create(:rating, user:@pekka, beer:beer)
+    visit user_path(@pekka)
+    expect(page).to have_content 'Favorite brewery panimo'
+  end
+
+
   it "who is signed in can delete their rating" do
     sign_in(username:'Pekka', password:'Foobar1')
     beer1 = FactoryGirl.create(:beer)
