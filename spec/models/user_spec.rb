@@ -54,6 +54,34 @@ describe User do
   end
 end
 
+describe "User's favorite style" do
+  let(:user){ FactoryGirl.create(:user) }
+
+  it "method exists" do
+    user.should respond_to :favorite_beer
+  end
+
+  it "returns nil if they have no ratings" do
+    user.favorite_beer.should eq(nil)
+  end
+
+  it "returns correctly if there is one rating" do
+    beer = create_beer_with_rating(5, user)
+
+    user.favorite_style.should eq(beer.style)
+  end
+
+  it "returns correctly if there are many ratings" do
+    create_beers_with_ratings(10, 5, 15, 31, 1, 20, user)
+    best = create_beer_with_rating(50, user)
+    best.style = "Weizen" #default "Lager"
+    best.save
+    create_beers_with_ratings(21, 35, user)
+    user.favorite_style.should eq(best.style)
+    user.favorite_style.should_not eq("Lager")
+  end
+end
+
 describe "User's favorite beer" do
   let(:user){ FactoryGirl.create(:user) }
 
