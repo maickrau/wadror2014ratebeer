@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include RatingAverage
+  include BeerStyles
 
   has_secure_password
 
@@ -25,8 +26,12 @@ class User < ActiveRecord::Base
   end
 
   def favorite_style
-    return nil if ratings.empty?
-    ratings.order(score: :desc).limit(1).first.beer.style
+    beer_styles.select{|style| not style_average(style).nil? }.max_by{ |style| style_average(style) }
   end
 
+  def style_average(style)
+    ret = average_of_list(ratings.select{ |rating| rating.beer.style == style })
+    return nil if ret.nan?
+    return ret
+  end
 end

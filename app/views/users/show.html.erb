@@ -12,6 +12,12 @@
   <% end %>
 </p>
 
+<% if not @user.favorite_style.nil? %>
+  <p>
+    Favorite style <%= @user.favorite_style %>
+  </p>
+<% end %>
+
 <% if not @user.beer_clubs.empty? %>
   <p>
     Member of

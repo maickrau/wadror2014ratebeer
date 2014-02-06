@@ -1,4 +1,6 @@
 class BeersController < ApplicationController
+  include BeerStyles
+  
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_signed_in, except: [:index, :show]
@@ -67,7 +69,7 @@ class BeersController < ApplicationController
   private
     def set_breweries_and_styles_for_template
       @breweries = Brewery.all
-      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+      @styles = beer_styles
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_beer

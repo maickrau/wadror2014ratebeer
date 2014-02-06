@@ -80,6 +80,16 @@ describe "User's favorite style" do
     user.favorite_style.should eq(best.style)
     user.favorite_style.should_not eq("Lager")
   end
+
+  it "returns style with highest average correctly" do
+    create_beers_with_ratings(50, 1, 2, user)
+    best = create_beer_with_rating(40, user)
+    best.style = "Weizen" #default "Lager"
+    best.save
+    create_beers_with_ratings(3, 4, user)
+    user.favorite_style.should eq(best.style)
+    user.favorite_style.should_not eq("Lager")
+  end
 end
 
 describe "User's favorite beer" do
