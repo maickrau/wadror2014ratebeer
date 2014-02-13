@@ -10,6 +10,7 @@ class StylesController < ApplicationController
   # GET /styles/1
   # GET /styles/1.json
   def show
+    @beers = @style.beers
   end
 
   # GET /styles/new

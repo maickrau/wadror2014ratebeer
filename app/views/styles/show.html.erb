@@ -10,5 +10,13 @@
   <%= @style.description %>
 </p>
 
+<table>
+  <% @beers.each do |beer| %>
+    <tr>
+      <td><%= link_to beer.name, beer %></td>
+    </tr>
+  <% end %>
+</table>
+
 <%= link_to 'Edit', edit_style_path(@style) %> |
 <%= link_to 'Back', styles_path %>
