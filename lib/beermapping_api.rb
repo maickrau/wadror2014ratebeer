@@ -1,5 +1,10 @@
 class BeermappingApi
   def self.places_in(city)
+    return [] if city.blank?
+    city = city.downcase
+    Rails.cache.fetch(city, expires_in: 1.week.from_now) { fetch_city(city) }
+  end
+  def self.fetch_city(city)
     url = "http://stark-oasis-9187.herokuapp.com/api/"
 
     response = HTTParty.get "#{url}#{ERB::Util.url_encode(city)}"
