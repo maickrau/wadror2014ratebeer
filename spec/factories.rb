@@ -18,9 +18,13 @@ FactoryGirl.define do
     year 2000
   end
 
+  factory :style do
+    name "Lager"
+  end
+
   factory :beer do
     name "kalia"
     brewery
-    old_style "Lager"
+    style
   end
 end

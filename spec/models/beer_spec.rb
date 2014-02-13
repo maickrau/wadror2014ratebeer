@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe Beer do
   it "will be saved when it has a proper name and style" do
-    beer = Beer.create name:'kalia', old_style:'Lager'
+    beer = Beer.create name:'kalia', style:FactoryGirl.create(:style)
     expect(beer.valid?).to eq(true)
     expect(Beer.count).to eq(1)
   end
 
   it "won't be saved when it doesn't have a name" do
-    beer = Beer.create old_style:'Lager'
+    beer = Beer.create style:FactoryGirl.create(:style)
     expect(beer.valid?).to eq(false)
     expect(Beer.count).to eq(0)
   end

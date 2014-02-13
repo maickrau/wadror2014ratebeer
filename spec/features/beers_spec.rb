@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Beer' do
   before :each do
     FactoryGirl.create(:brewery)
+    FactoryGirl.create(:style)
   end
 
   describe "when user is logged in" do

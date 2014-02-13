@@ -26,11 +26,11 @@ class User < ActiveRecord::Base
   end
 
   def favorite_style
-    beer_styles.select{|style| not style_average(style).nil? }.max_by{ |style| style_average(style) }
+    Style.select{|style| not style_average(style).nil? }.max_by{ |style| style_average(style) }
   end
 
   def style_average(style)
-    de_NaN_ify average_of_list(ratings.select{ |rating| rating.beer.old_style == style })
+    de_NaN_ify average_of_list(ratings.select{ |rating| rating.beer.style == style })
   end
 
   def favorite_brewery

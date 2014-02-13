@@ -57,6 +57,10 @@ end
 describe "User's favorite style" do
   let(:user){ FactoryGirl.create(:user) }
 
+  before :each do
+    @default_style = FactoryGirl.create(:style)
+  end
+
   it "method exists" do
     user.should respond_to :favorite_style
   end
@@ -68,27 +72,27 @@ describe "User's favorite style" do
   it "returns correctly if there is one rating" do
     beer = create_beer_with_rating(5, user)
 
-    user.favorite_style.should eq(beer.old_style)
+    user.favorite_style.should eq(beer.style)
   end
 
   it "returns correctly if there are many ratings" do
-    create_beers_with_ratings(10, 5, 15, 31, 1, 20, user)
+    create_beers_with_same_style_with_ratings(10, 5, 15, 31, 1, 20, user)
     best = create_beer_with_rating(50, user)
-    best.old_style = "Weizen" #default "Lager"
+    best.style = FactoryGirl.create(:style)
     best.save
     create_beers_with_ratings(21, 35, user)
-    user.favorite_style.should eq(best.old_style)
-    user.favorite_style.should_not eq("Lager")
+    user.favorite_style.should eq(best.style)
+    user.favorite_style.should_not eq(@default_style)
   end
 
   it "returns style with highest average correctly" do
-    create_beers_with_ratings(50, 1, 2, user)
+    create_beers_with_same_style_with_ratings(50, 1, 2, user)
     best = create_beer_with_rating(40, user)
-    best.old_style = "Weizen" #default "Lager"
+    best.style = FactoryGirl.create(:style)
     best.save
     create_beers_with_ratings(3, 4, user)
-    user.favorite_style.should eq(best.old_style)
-    user.favorite_style.should_not eq("Lager")
+    user.favorite_style.should eq(best.style)
+    user.favorite_style.should_not eq(@default_style)
   end
 end
 
@@ -159,8 +163,8 @@ describe "User's favorite beer" do
   end
 end
 
-def create_beer_with_rating(score, user)
-  beer = FactoryGirl.create(:beer)
+def create_beer_with_rating(score, user, style=FactoryGirl.create(:style))
+  beer = FactoryGirl.create(:beer, style:style)
   FactoryGirl.create(:rating, score:score, beer:beer, user:user)
   beer
 end
@@ -168,5 +172,12 @@ end
 def create_beers_with_ratings(*scores, user)
   scores.each do |score|
     create_beer_with_rating(score, user)
+  end
+end
+
+def create_beers_with_same_style_with_ratings(*scores, user)
+  style = FactoryGirl.create(:style)
+  scores.each do |score|
+    create_beer_with_rating(score, user, style)
   end
 end
