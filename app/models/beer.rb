@@ -1,6 +1,5 @@
 class Beer < ActiveRecord::Base
   include RatingAverage
-  include BeerStyles
 
   belongs_to :style
   belongs_to :brewery

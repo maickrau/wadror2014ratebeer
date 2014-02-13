@@ -1,5 +1,4 @@
 class BeersController < ApplicationController
-  include BeerStyles
   
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]

@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   include RatingAverage
-  include BeerStyles
 
   has_secure_password
 
