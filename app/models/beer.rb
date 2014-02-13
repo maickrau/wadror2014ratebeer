@@ -7,7 +7,7 @@ class Beer < ActiveRecord::Base
   has_many :raters, -> { uniq }, :through => :ratings, :source => :user
 
   validates :name, :presence => true
-  validates :style, inclusion: {in: ["Weizen", "Lager", "Pale ale", "IPA", "Porter"], message: "%{value} is not a valid style"}
+  validates :old_style, inclusion: {in: ["Weizen", "Lager", "Pale ale", "IPA", "Porter"], message: "%{value} is not a valid style"}
 
   def to_s
     "#{name}, #{brewery.name}"

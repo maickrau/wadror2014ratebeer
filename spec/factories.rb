@@ -21,6 +21,6 @@ FactoryGirl.define do
   factory :beer do
     name "kalia"
     brewery
-    style "Lager"
+    old_style "Lager"
   end
 end

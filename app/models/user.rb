@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def style_average(style)
-    de_NaN_ify average_of_list(ratings.select{ |rating| rating.beer.style == style })
+    de_NaN_ify average_of_list(ratings.select{ |rating| rating.beer.old_style == style })
   end
 
   def favorite_brewery
