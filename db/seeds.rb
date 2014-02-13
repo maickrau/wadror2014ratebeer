@@ -10,10 +10,15 @@ b1 = Brewery.create name:"Koff", year:1897
 b2 = Brewery.create name:"Malmgard", year:2001
 b3 = Brewery.create name:"Weihenstephaner", year:1042
 
-b1.beers.create name:"Iso 3", old_style:"Lager"
-b1.beers.create name:"Karhu", old_style:"Lager"
-b1.beers.create name:"Tuplahumala", old_style:"Lager"
-b2.beers.create name:"Huvila Pale Ale", old_style:"Pale Ale"
-b2.beers.create name:"X Porter", old_style:"Porter"
-b3.beers.create name:"Hefezeizen", old_style:"Weizen"
-b3.beers.create name:"Helles", old_style:"Lager"
+lager = Style.select{ |style| style.name == 'Lager' }[0]
+pale_ale = Style.select{ |style| style.name == 'Pale Ale' }[0]
+porter = Style.select{ |style| style.name == 'Porter' }[0]
+weizen = Style.select{ |style| style.name == 'Weizen' }[0]
+
+b1.beers.create name:"Iso 3", style:lager
+b1.beers.create name:"Karhu", style:lager
+b1.beers.create name:"Tuplahumala", style:lager
+b2.beers.create name:"Huvila Pale Ale", style:pale_ale
+b2.beers.create name:"X Porter", style:porter
+b3.beers.create name:"Hefezeizen", style:weizen
+b3.beers.create name:"Helles", style:lager
