@@ -13,8 +13,8 @@
     <% @styles.each do |style| %>
       <tr>
         <td><%= link_to style.name, style %></td>
-        <td><%= link_to 'Edit', edit_style_path(style) %></td>
-        <td><%= link_to 'Destroy', style, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_style_path(style), class:"btn btn-default" if not current_user.nil? %></td>
+        <td><%= link_to 'Destroy', style, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" if not current_user.nil? and current_user.admin %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Style', new_style_path %>
+<%= link_to 'New Style', new_style_path, class:"btn btn-default" %>
