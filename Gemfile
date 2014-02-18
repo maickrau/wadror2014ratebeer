@@ -13,6 +13,12 @@ gem 'rails-settings-cached', '0.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
+gem 'bootstrap-sass'
+
+group :development do
+  gem 'rails_layout'
+end
+
 group :test do
   gem 'webmock'
   gem 'factory_girl_rails'
